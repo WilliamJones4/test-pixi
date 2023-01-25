@@ -2,7 +2,8 @@ import {
   Application,
   Point,
   Rectangle,
-  Sprite,
+  Ticker,
+  Text
 } from "pixi.js";
 
 import CardSprite from "./sprites/CardSprite";
@@ -18,6 +19,7 @@ class Game {
   
   private readonly cards: CardSprite[];
   private readonly fps: FpsSprite;
+  private readonly startBtn: Text;
   private moving_cards: number[];
   
   constructor(parent: HTMLElement) {
@@ -30,6 +32,7 @@ class Game {
     this.nb_cards = 144;
     this.cards = [];
     this.fps = new FpsSprite();
+    this.startBtn = new Text("Start");
 
     this.tickerListener = this.tickerListener.bind(this);
   }
@@ -41,7 +44,7 @@ class Game {
 
   generateCards(): void {
     for (let idx = 0; idx < this.nb_cards; idx++) {
-      const card = new CardSprite();
+      const card = new CardSprite(idx);
       card.anchor.set(0.5);
       card.position = this.start_pos;
       card.rotation = Math.random() - 0.5;
@@ -53,21 +56,27 @@ class Game {
 
   generateSprites(): void {
     this.generateCards();
+
     this.app.stage.addChild(this.fps);
+    this.app.stage.addChild(this.startBtn);
   }
 
-  tickerListener(speed: number) {
-    this.fps.fps = this.app.ticker.FPS;
+  tickerListener() {
+    this.fps.fps = this.ticker.FPS;
   }
 
   start(): void {
     this.generateSprites();
 
-    this.app.ticker.add(this.tickerListener);
+    this.ticker.add(this.tickerListener);
   }
 
   get screen(): Rectangle {
     return this.app.screen;
+  }
+
+  get ticker(): Ticker {
+    return this.app.ticker;
   }
 }
 
