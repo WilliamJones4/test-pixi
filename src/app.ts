@@ -1,5 +1,7 @@
 import { Application } from "pixi.js";
 
+import CardSprite from "./card";
+
 
 class Game {
   private readonly app: Application<HTMLCanvasElement>;
@@ -16,6 +18,12 @@ class Game {
   }
 
   start(): void {
+    const card = new CardSprite();
+    card.anchor.set(0.5);
+    card.x = this.app.screen.width / 2;
+    card.y = this.app.screen.height / 2;
+
+    this.app.stage.addChild(card);
   }
 }
 
