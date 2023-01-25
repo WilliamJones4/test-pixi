@@ -1,11 +1,14 @@
+import { posix } from "path";
 import { 
   Application,
   Point,
   Rectangle,
   Ticker,
-  Text
+  Text,
+  Sprite
 } from "pixi.js";
 
+import CardGroupSprite from "./sprites/CardGroupSprite";
 import CardSprite from "./sprites/CardSprite";
 import FpsSprite from "./sprites/FpsSprite";
 
@@ -18,10 +21,12 @@ class Game {
   private readonly nb_cards: number;
   
   private readonly cards: CardSprite[];
+  private readonly start_cards_group: CardGroupSprite;
+  private readonly end_cards_group: CardGroupSprite;
   private readonly fps: FpsSprite;
   private readonly startBtn: Text;
 
-  private moving_cards: Map<number, number>;
+  private moving_cards: Map<number, CardSprite>;
   private last_action_time: number;
   private next_move_card: number;
   
@@ -34,10 +39,12 @@ class Game {
 
     this.nb_cards = 144;
     this.cards = [];
+    this.start_cards_group = new CardGroupSprite();
+    this.end_cards_group = new CardGroupSprite();
     this.fps = new FpsSprite();
     this.startBtn = new Text("Start");
 
-    this.moving_cards = new Map<number, number>();
+    this.moving_cards = new Map<number, CardSprite>();
     this.last_action_time = 0;
 
     this.tickerListener = this.tickerListener.bind(this);
@@ -52,15 +59,23 @@ class Game {
     for (let idx = 0; idx < this.nb_cards; idx++) {
       const card = new CardSprite(idx);
       card.anchor.set(0.5);
-      card.position = this.start_pos;
       card.rotation = Math.random() - 0.5;
 
-      this.app.stage.addChild(card);
+      this.start_cards_group.addChild(card);
       this.cards.push(card);
     }
   }
 
   generateSprites(): void {
+    this.start_cards_group.anchor.set(0.5);
+    this.start_cards_group.position = this.start_pos;
+    this.app.stage.addChild(this.start_cards_group);
+
+    this.end_cards_group.anchor.set(0.5);
+    this.end_cards_group.position = this.end_pos;
+    this.end_cards_group.addChild(new Sprite());
+    this.app.stage.addChild(this.end_cards_group);
+
     this.generateCards();
 
     this.app.stage.addChild(this.fps);
@@ -77,15 +92,19 @@ class Game {
     if (this.last_action_time + 1000 < this.lastTime) {
       if (this.next_move_card > 0) {
         this.next_move_card -= 1;
-        this.moving_cards.set(this.next_move_card, this.last_action_time);
+        const child = this.start_cards_group.removeChildAt(this.next_move_card);
+        child.position = this.start_cards_group.position;
+        this.moving_cards.set(this.next_move_card, child);
         this.last_action_time = this.lastTime;
       }
     }
 
-    this.moving_cards.forEach((start_time, key) => {
+    this.moving_cards.forEach((card, start_time) => {
       if (start_time + 2000 < this.lastTime) {
-        this.cards[key].position = this.end_pos;
-        this.moving_cards.delete(key);
+        card.position.x = 0;
+        card.position.y = 0;
+        this.end_cards_group.addChild(card);
+        this.moving_cards.delete(start_time);
       } else {
       }
     });
