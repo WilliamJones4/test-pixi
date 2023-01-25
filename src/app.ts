@@ -1,6 +1,6 @@
 import { Application } from "pixi.js";
 
-import CardSprite from "./card";
+import CardSprite from "./sprites/CardSprite";
 
 
 class Game {
@@ -17,13 +17,20 @@ class Game {
     return this;
   }
 
-  start(): void {
-    const card = new CardSprite();
-    card.anchor.set(0.5);
-    card.x = this.app.screen.width / 2;
-    card.y = this.app.screen.height / 2;
+  generate_cards(nb_cards = 144): void {
+    for (let idx = 0; idx < nb_cards; idx++) {
+      const card = new CardSprite();
+      card.anchor.set(0.5);
+      card.x = this.app.screen.width / 2;
+      card.y = this.app.screen.height / 2;
+      card.rotation = Math.random() - 0.5;
 
-    this.app.stage.addChild(card);
+      this.app.stage.addChild(card);
+    }
+  }
+
+  start(): void {
+    this.generate_cards();
   }
 }
 
