@@ -2,9 +2,13 @@ import { Sprite, Texture } from "pixi.js";
 
 
 class CardSprite extends Sprite {
-  constructor() {
+  background: Sprite;
+
+  constructor(id?: number) {
     super();
-    this.texture = Texture.from("/images/hero.png");
+    this.background = new Sprite(Texture.from("/images/card-body.png"));
+    this.background.anchor.set(0.5);
+    this.addChild(this.background);
   }
 }
 

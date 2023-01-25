@@ -31,7 +31,7 @@ class Game {
     this.cards = [];
     this.fps = new FpsSprite();
 
-    this.ticker = this.ticker.bind(this);
+    this.tickerListener = this.tickerListener.bind(this);
   }
 
   display(): Game {
@@ -39,7 +39,7 @@ class Game {
     return this;
   }
 
-  generate_cards(): void {
+  generateCards(): void {
     for (let idx = 0; idx < this.nb_cards; idx++) {
       const card = new CardSprite();
       card.anchor.set(0.5);
@@ -51,19 +51,19 @@ class Game {
     }
   }
 
-  generate_sprites(): void {
-    this.generate_cards();
+  generateSprites(): void {
+    this.generateCards();
     this.app.stage.addChild(this.fps);
   }
 
-  ticker(time: number) {
+  tickerListener(speed: number) {
     this.fps.fps = this.app.ticker.FPS;
   }
 
   start(): void {
-    this.generate_sprites();
+    this.generateSprites();
 
-    this.app.ticker.add(this.ticker);
+    this.app.ticker.add(this.tickerListener);
   }
 
   get screen(): Rectangle {

@@ -4,8 +4,8 @@ import { Text } from "pixi.js";
 class FpsSprite extends Text {
   constructor() {
     super();
-    this.x = 50;
-    this.y = 100;
+    this.x = 0;
+    this.y = 0;
     this.style.fill = "white";
     this.fps = 60;
   }
