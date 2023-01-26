@@ -4,8 +4,11 @@ import Image3TextSprite from "./sprites/Image3TextSprite";
 
 
 class Game2 extends Game {
+  private static T: number = 2000;
+
   private readonly image_files: string[];
   private image3TextSprite: Image3TextSprite;
+  private last_action_time: number;
 
   constructor(parent: HTMLElement) {
     super(parent);
@@ -26,6 +29,8 @@ class Game2 extends Game {
       'computer-fail',
       'computer'
     ];
+
+    this.last_action_time = 0;
   }
 
   load() {
@@ -35,14 +40,27 @@ class Game2 extends Game {
 
     const texturesPromise = Assets.load(this.image_files);
 
-    texturesPromise.then((textures) => {
-      this.image3TextSprite = new Image3TextSprite(this.image_files, textures);
-      this.stage.addChild(this.image3TextSprite);
+    return new Promise((resolve: (...args: any) => any, reject) => {
+      texturesPromise
+        .then((textures) => {
+          this.image3TextSprite = new Image3TextSprite(this.image_files, textures);
+          this.stage.addChild(this.image3TextSprite);
+          resolve();
+          console.log('OK');
+        })
+        .catch(err => {
+          reject(err);
+        });
     });
   }
 
-  start() {
-    this.load();
+  tickerListener(): void {
+    super.tickerListener();
+
+    if (this.last_action_time + Game2.T < this.lastTime) {
+      this.image3TextSprite.update();
+      this.last_action_time = this.lastTime;
+    }
   }
 }
 

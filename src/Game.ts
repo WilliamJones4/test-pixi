@@ -24,6 +24,12 @@ class Game {
     this.ticker.add(this.tickerListener);
   }
 
+  load() {
+    return new Promise((resolve: (...args: any) => void) => {
+      resolve();
+    });
+  }
+
   get stage(): Container {
     return this.app.stage;
   }
