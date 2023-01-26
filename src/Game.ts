@@ -6,8 +6,8 @@ class Game {
   private readonly parent: HTMLElement;
 
 
-  constructor(parent: HTMLElement) {
-    this.app = new Application<HTMLCanvasElement>({ backgroundColor: "black" });
+  constructor(parent: HTMLElement, backgroundColor?: string) {
+    this.app = new Application<HTMLCanvasElement>({ backgroundColor: backgroundColor || "black" });
     this.parent = parent;
 
     this.tickerListener = this.tickerListener.bind(this);
@@ -24,7 +24,7 @@ class Game {
     this.ticker.add(this.tickerListener);
   }
 
-  load() {
+  async load() {
     return new Promise((resolve: (...args: any) => void) => {
       resolve();
     });
