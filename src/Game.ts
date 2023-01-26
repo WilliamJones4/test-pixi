@@ -7,7 +7,9 @@ class Game {
 
 
   constructor(parent: HTMLElement, backgroundColor?: string) {
-    this.app = new Application<HTMLCanvasElement>({ backgroundColor: backgroundColor || "black" });
+    this.app = new Application<HTMLCanvasElement>({
+      backgroundColor: backgroundColor || "#241f21",
+    });
     this.parent = parent;
 
     this.tickerListener = this.tickerListener.bind(this);

@@ -3,4 +3,16 @@ html, body {
   padding: 0;
   overflow: hidden;
   display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #241f21;
+}
+
+canvas {
+  margin: auto;
+  display: block;
+  width: 100vw;
+  max-width: 133.33vh;
+  height: 100vh;
+  max-height: 75vw;
 }

@@ -1,3 +1,5 @@
+import Game1 from "./Game1";
+import Game2 from "./Game2";
 import Game3 from "./Game3";
 
 
