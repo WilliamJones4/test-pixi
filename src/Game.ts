@@ -15,6 +15,10 @@ class Game {
     this.tickerListener = this.tickerListener.bind(this);
   }
 
+  destroy() {
+    this.app.destroy(true);
+  }
+
   display(): Game {
     this.parent.appendChild(this.app.view);
     return this;

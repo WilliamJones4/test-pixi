@@ -31,6 +31,10 @@ class Image3TextSprite extends Sprite {
       if (Math.random() < 0.5) {
         child.text = name;
       } else {
+        if (this.textures[name] === undefined) {
+          idx -= 1;
+          continue;
+        }
         child.image = this.textures[name];
       }
     }
