@@ -1,6 +1,6 @@
-import Game1 from "./Game1";
+import Game2 from "./Game2";
 
-const game = new Game1(document.body);
+const game = new Game2(document.body);
 game
   .display()
   .start();
