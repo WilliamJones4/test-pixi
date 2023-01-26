@@ -46,7 +46,6 @@ class Game2 extends Game {
           this.image3TextSprite = new Image3TextSprite(this.image_files, textures);
           this.stage.addChild(this.image3TextSprite);
           resolve();
-          console.log('OK');
         })
         .catch(err => {
           reject(err);
