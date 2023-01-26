@@ -35,7 +35,7 @@ class Game2 extends Game {
 
   load() {
     this.image_files.forEach(image_name => {
-      Assets.add(image_name, `/images/${ image_name }.png`);
+      Assets.add(image_name, `./images/${ image_name }.png`);
     });
 
     const texturesPromise = Assets.load(this.image_files);

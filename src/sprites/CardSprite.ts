@@ -7,7 +7,7 @@ class CardSprite extends Sprite {
 
   constructor(id: number) {
     super();
-    this.background = new Sprite(Texture.from("/images/card-body.png"));
+    this.background = new Sprite(Texture.from("./images/card-body.png"));
     this.background.anchor.set(0.5);
     this.addChild(this.background);
     
