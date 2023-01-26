@@ -13,7 +13,46 @@
     <button id="task2"> Task2 </button>
     <button id="task3"> Task3 </button>
   </div>
-  <!-- <canvas id="panel" width="1920" height="1080"></canvas> -->
+  <div
+    style="
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      display: flex;
+      background-color: #241f21;
+    "
+    id="start_panel"
+  >
+    <button
+      style="
+        height: 100px;
+        width: 300px;
+        margin: auto;
+        font-size: 48px;
+      "
+      onclick="onStart()";
+    >
+      Start
+    </button>
+  </div>
   <script src="app.js"></script>
+  <script type="text/javascript">
+    function onStart() {
+      var start_panel = document.getElementById("start_panel");
+      goFullscreen();
+      start_panel.style.display = "none";
+    }
+    function goFullscreen() {
+      var element = document.documentElement;
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if (element.webkitRequestFullScreen) {
+        element.webkitRequestFullScreen();
+      }
+    }
+  </script>
 </body>
 </html>
